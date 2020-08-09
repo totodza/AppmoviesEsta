@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="dark" text="" defaultHref="/buscarmovies" icon="planet"> </ion-back-button>
+    </ion-buttons>
+    <ion-button fill="outline" slot="end" href="https://www.youtube.com/">
+      <ion-icon name="logo-youtube" class="iconn"></ion-icon>
+    </ion-button>
+    <ion-title>Detalle de la pelicula </ion-title>
+  </ion-toolbar>
+</ion-header>
+  <ng-template #pajarita > 
+    <ion-label class="goku" position="floating">Sin descripción</ion-label>
+  </ng-template>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-img *ngIf="detailMovies.poster_path==null" height="400" width="100%" src="assets/img/k1.png">
+      </ion-img>
+
+      <ion-img *ngIf="detailMovies.poster_path" height="400" width="100%"
+        src="https://image.tmdb.org/t/p/original/{{detailMovies.poster_path}}">
+      </ion-img>
+      <ion-card-subtitle>
+        <ion-chip color="link" *ngFor="let item of detailMovies.genres">{{item.name |uppercase}} </ion-chip>
+        
+      </ion-card-subtitle>
+
+      <ion-card-title>
+        {{detailMovies.original_title}}
+        <ion-icon name="star-outline" color ="warning"></ion-icon>
+      </ion-card-title>
+      <ion-label> 
+        <br>
+      {{detailMovies.release_date | date: 'fullDate'}}
+      </ion-label>
+    </ion-card-header>
+    <ion-card-content *ngIf="detailMovies.overview  else pajarita">
+      {{detailMovies.overview}} <ion-icon (click)="verComent()" style="font-size:18px  !important"  slot="end" name="chatbubble-ellipses-outline"></ion-icon>
+    
+      <div *ngIf="verComentario">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Descripcion</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+
+        <ion-button type=""> Enviar</ion-button>
+      </div>
+    </ion-card-content>
+    <ion-item *ngIf="detailMovies.video==true">
+    </ion-item>
+    <ion-item *ngFor="let item of video">
+      <ion-buttons  slot="end">
+        <ion-button href="https://www.youtube.com/watch?v={{item.key}}">
+          <ion-icon name="logo-youtube" color="danger"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      </ion-item>
+  </ion-card>
+</ion-content>
